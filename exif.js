@@ -100,10 +100,10 @@ exports.load = function(buffer,success_callback, err_callback){
                   for(var j = 0; j < 4; j++)
                               offsetOrValue[j] = buffer[index++];
                   if(!jpeg.valueOrOffset(components, dataFormat)){
-                        entry.setValue(jpeg.dataFormat(offsetOrValue, dataFormat));
+                        entry.setValue(jpeg.dataFormat(offsetOrValue, dataFormat, components));
                   }else{
-                        var offest = jpeg.dataFormat(offsetOrValue, 4);
-                        entry.setValue(jpeg.dataFormat(jpeg.bufferCopy(buffer, 12 + offest, jpeg.getBytes(components, dataFormat)), dataFormat));
+                        var offest = jpeg.dataFormat(offsetOrValue, 4, components);
+                        entry.setValue(jpeg.dataFormat(jpeg.bufferCopy(buffer, 12 + offest, jpeg.getBytes(components, dataFormat)), dataFormat, components));
                   }
                   entrys.push(entry);
             }
@@ -140,10 +140,10 @@ exports.load = function(buffer,success_callback, err_callback){
                   for(var j = 0; j < 4; j++)
                               offsetOrValue[j] = buffer[GPSOffset++];
                   if(!jpeg.valueOrOffset(components, dataFormat)){
-                        entry.setValue(jpeg.dataFormat(offsetOrValue, dataFormat));
+                        entry.setValue(jpeg.dataFormat(offsetOrValue, dataFormat, components));
                   }else{
-                        var offest = jpeg.dataFormat(offsetOrValue, 4);  
-                        entry.setValue(jpeg.dataFormat(jpeg.bufferCopy(buffer, 12 + offest, jpeg.getBytes(components, dataFormat)), dataFormat));
+                        var offest = jpeg.dataFormat(offsetOrValue, 4, components);  
+                        entry.setValue(jpeg.dataFormat(jpeg.bufferCopy(buffer, 12 + offest, jpeg.getBytes(components, dataFormat)), dataFormat, components));
                   }
                   GPSEntrys.push(entry);
             }

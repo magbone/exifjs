@@ -97,8 +97,8 @@ exports.valueOrOffset = function(components, dataFormat){
       return (size * count) > 4
 }
 
-exports.dataFormat = function(buffer, formatType){
-      
+exports.dataFormat = function(buffer, formatType, components){
+      const componentsByte = (components[0] << 24) + (components[1] << 16) + (components[2] << 8) + components[3];
       switch(formatType){
             case 1:
                   return  buffer;
@@ -109,8 +109,12 @@ exports.dataFormat = function(buffer, formatType){
             case 4: 
                   return (buffer[0] << 24) + (buffer[1] << 16) + (buffer[2] << 8) + buffer[3];
             case 5:
-                  return ((buffer[0] << 24) + (buffer[1] << 16) + (buffer[2] << 8) + buffer[3]) /
-                              ((buffer[4] << 24) + (buffer[5] << 16) + (buffer[3] << 8) + buffer[7]);
+                  var rationalByte = new Array()
+                  for(var i = 0; i < componentsByte; i++) {
+                        rationalByte.push(((buffer[0 + 8 * i] << 24) + (buffer[1 + 8 * i] << 16) + (buffer[2 + 8 * i] << 8) + buffer[3 + 8 * i]) / 
+                              ((buffer[4 + 8 * i] << 24) + (buffer[5 + 8 * i] << 16) + (buffer[6 + 8 * i] << 8) + buffer[7 + 8 * i]));
+                  }
+                  return rationalByte;
       }
       return null;
 };
